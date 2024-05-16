@@ -105,10 +105,13 @@ fn foo() {
 
 ```
 
-If a mutable value is borrowed, it becomes immutable for the duration of the
-borrow. Once the borrowed pointer goes out of scope, the value can be mutated
-again. This is in contrast to unique pointers, which once moved can never be
-used again. For example,
+If a mutable value is borrowed in the same scope, the original value (`x` above) becomes immutable while being borrowed (by `xr` above).
+`x` can only be changed through `xr`.
+If a mutable value is borrowed in a different scope, it becomes immutable while in that scope.
+This is to ensure at any given time, there is only one mutable reference to a value, including the original value itself.
+
+Once the borrowed pointer goes out of scope, the value can be mutated again.
+This is in contrast to unique pointers, which once moved can never be used again. For example,
 
 ```rust
 fn foo() {
