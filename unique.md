@@ -57,6 +57,9 @@ fn foo() {
 As with primitive types in Rust, owning pointers and the data they point to are
 immutable by default. Unlike in C++, you can't have a mutable (unique) pointer to
 immutable data or vice versa. Mutability of the data follows from the pointer.
+Correspondent with this design, mutability of the pointer means not only whether
+that pointer can point to another memory address, but also whether the original
+data may be modified.
 E.g.,
 
 ```rust
@@ -68,6 +71,7 @@ fn foo() {
     let mut x = Box::new(75);
     x = y;            // OK, x is mutable.
     *x = 43;          // OK, *x is mutable.
+    x = 76;           // ERROR, type mismatch.
 }
 ```
 
